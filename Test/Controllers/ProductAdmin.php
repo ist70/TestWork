@@ -7,29 +7,32 @@ use Test\Models\Discount_Product;
 
 class ProductAdmin
 {
-
-    private $sourses = ['A' => 1000, 'B' => 100,'C' => 40, 'D' => 600,'E' => 1500, 'F' => 1100];
+    public $productsSelect = ['A', 'B', 'A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
     public function actionIndex()
     {
         $this->actionCreate()->actionSetConnection();
     }
 
-    private  function actionCreate()
+    private function actionCreate()
     {
-        foreach ($this->sourses as $key => $value) {
-            $object[$key] = new Product($key, $value);
-        }
-        return $this;
+        return Product::index();
     }
 
     private function actionSetConnection()
 
     {
-        $discount1 = new Discount_ProductSet();
-        $discount1->setProductSet();
-        $discount1->setDiscount(10);
+        $discount2 = new Discount_Product();
+        $discount2->setDiscountProduct2($this->object, 'A', 'B', 10);
         return $this;
+    }
+
+    public function actionOrder()
+    {
+        $productOrder = new Order($this->productsSelect);
+        foreach ($this->productsSelect as $product) {
+            $productOrder->push($product);
+        }
     }
 
 }
